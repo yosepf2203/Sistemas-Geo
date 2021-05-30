@@ -14,35 +14,35 @@ function iniciaMapa() {
 
     muestraLugares();
 
-
-    var tipo = document.getElementById('tipo');
-    var valor;
-    tipo.addEventListener('change', function () {
-
-        valor = this.options[tipo.selectedIndex].value;
-        muestraLugares();
-    });
-
-    function muestraLugares() {
-
-        if (navigator.geolocation) {
-
-            navigator.geolocation.getCurrentPosition(posicion => {
-
-                var coordenadas = {
-                    lat: posicion.coords.latitude,
-                    lng: posicion.coords.longitude
-                };
-                var service = new google.maps.places.PlacesService(map);
-                service.nearbySearch({ location: coordenadas, radius: 1000, type: [valor] }, function (results, status, pagination) {
-                    if (status !== 'OK') return;
-                    crearMarcadores(results);
-                });
-            });
-        }
-    }
-
 }
+
+var tipo = document.getElementById('tipo');
+var valor;
+tipo.addEventListener('change', function () {
+
+    valor = this.options[tipo.selectedIndex].value;
+    muestraLugares();
+});
+
+function muestraLugares() {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(posicion => {
+
+            var coordenadas = {
+                lat: posicion.coords.latitude,
+                lng: posicion.coords.longitude
+            };
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({ location: coordenadas, radius: 1000, type: [valor] }, function (results, status, pagination) {
+                if (status !== 'OK') return;
+                crearMarcadores(results);
+            });
+        });
+    }
+}
+
 
 function crearMarcadores(places) {
 
